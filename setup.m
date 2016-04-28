@@ -2,6 +2,9 @@ close all
 clear all
 clc
 
+%%% Setup the Simulink simulation 
+% Test
+
 % Trajectory generator
 t0 = 3; 
 t1 = 5; 

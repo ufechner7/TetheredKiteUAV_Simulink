@@ -1,6 +1,6 @@
 % add x,y coordinates (not simulated in the script, only for visualization)
 close all
-% Test 
+
 sim_len = length( p_is.Data );
 T = sim_len * dt;
 
