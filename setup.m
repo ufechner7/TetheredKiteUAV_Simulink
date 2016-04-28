@@ -82,13 +82,10 @@ A_t_ref_cl(4:6,1:3) = -omega_0_trans^2*eye(3);
 A_t_ref_cl(4:6,4:6) = -2*omega_0_trans*zeta_0_trans*eye(3);
 B_t_ref_cl(4:6, :) = omega_0_trans^2*eye(3);
 
-% A_t_ref_cl(4:6,1:3) = -0.4*eye(3);
-% A_t_ref_cl(4:6,4:6) = -1.2*eye(3);
-% B_t_ref_cl(4:6, :) = 0.4*eye(3);
-
 % Error controller translational dynamics
 K_x_t = omega_0_trans^2*eye(3);
-K_v_t =4* 2*omega_0_trans*zeta_0_trans*eye(3); 
+%K_v_t =4* 2*omega_0_trans*zeta_0_trans*eye(3); 
+K_v_t = 2*omega_0_trans*zeta_0_trans*eye(3); 
 K_i_t = 10*eye(3);
 
 % Initializations
@@ -107,17 +104,21 @@ Bc = [zeros(3,3); K_x_t ];
 Bpbl = [zeros(3); eye(3)]; % Bpbl * Kr =  Bc
 
 Q = blkdiag( diag([0.2,0.2,0.2,2,2,2 ]));
-P_tref = lyap(A_t_ref_cl', Q);
+%P_tref = lyap(A_t_ref_cl', Q);
+P_tref = lyap(A_M_aug', Q);
 
 % Learning rates
-Gamma_ad = 50; % MRAC, constant dist
-Gamma_pred = 300; % Predictor, constant dist
+Gamma_ad = 30; % MRAC, constant dist
+Gamma_pred = 30; % Predictor, constant dist
 
 Gamma_ad_x = 0*eye(6); % Not necessary
 Gamma_pred_x =0* eye(6);
 
-A_prd = 1000 * A_t_ref_cl; % Predictor Dynamics
-P_prd = 1000 * P_tref;
+%A_prd = 1000 * A_t_ref_cl; % Predictor Dynamics
+%P_prd = 1000 * P_tref;
+
+A_prd = 5000 * A_M_aug; % Predictor Dynamics
+P_prd = 5000 * P_tref;
 
 %% Robustness modifications
 % Deadzone treshhold
