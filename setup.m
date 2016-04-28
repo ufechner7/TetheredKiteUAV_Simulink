@@ -2,8 +2,10 @@ close all
 clear all
 clc
 
-%%% Setup the Simulink simulation 
-% Test
+%%% Setup the Simulink simulation. The script will be executed
+%%% automatically. Please just run the Simulink model
+%%% model_groundTethered.slx
+
 
 % Trajectory generator
 t0 = 3; 
