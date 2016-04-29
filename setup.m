@@ -13,7 +13,7 @@ t1 = 5;
 
 T_ro_init = 0;
 T_sim = 20;
-T_launch = 60;
+T_launch = 40;
 dt = 0.002;
 sample_log = 0.01;
 
@@ -59,8 +59,8 @@ m_ges = m_kite + m_uav ;
 % Reference model rotational dynamics
 A_ref = zeros(6); 
 A_ref(1:3, 4:6) = eye(3); 
-omega_ref = 60; 
-damp_ref = 1; 
+omega_ref = 100; 
+damp_ref = 2*1; 
 A_ref(4:6, 1:3) = -omega_ref^2 * eye(3); 
 A_ref(4:6, 4:6) = -2*damp_ref * omega_ref * eye(3);  
 B_ref = zeros(6,3); 
@@ -108,8 +108,8 @@ Q = blkdiag( diag([0.2,0.2,0.2,2,2,2 ]));
 P_tref = lyap(A_M_aug', Q);
 
 % Learning rates
-Gamma_ad = 30; % MRAC, constant dist
-Gamma_pred = 30; % Predictor, constant dist
+Gamma_ad = 100;100; % MRAC, constant dist
+Gamma_pred = 100; % Predictor, constant dist
 
 Gamma_ad_x = 0*eye(6); % Not necessary
 Gamma_pred_x =0* eye(6);
@@ -117,15 +117,31 @@ Gamma_pred_x =0* eye(6);
 %A_prd = 1000 * A_t_ref_cl; % Predictor Dynamics
 %P_prd = 1000 * P_tref;
 
-A_prd = 5000 * A_M_aug; % Predictor Dynamics
-P_prd = 5000 * P_tref;
+A_prd = 1000 * A_M_aug; % Predictor Dynamics
+P_prd = 1000 * P_tref; %lyap(A_prd', 100 * Q);
+
+%P_prd = 10 * P_tref;
 
 %% Robustness modifications
 % Deadzone treshhold
-e_0 = 0.1;
+e_0 = 0.01;
 % Smoothed deadzone
-delta_dead = 0.75;
+delta_dead = 0.5;
 % Projection 
-Theta_max = 300; % maximum allowable bound for the jth column 
-epsilon = 0.7; % projection tolerance
+Theta_max = 60; % maximum allowable bound for the jth column 
+%Theta_max = 6; % maximum allowable bound for the jth column 
 
+epsilon = 0.6; % projection tolerance
+
+
+%% Actuator
+% Armlength
+R = 0.3;
+km = 1e-6; % arbitrary
+
+C_A = [0, -R, 0, R;
+    R, 0, -R, 0;
+    -km, km, -km, km;
+    1, 1, 1, 1];
+
+C_A_inv = C_A \eye(4) ;

@@ -56,7 +56,7 @@ drawArrow = @(a,b) quiver3( a(1),a(2),a(3),...
     b(1), b(2), b(3), '-r', 'Linewidth', 1.5 ) ;
 drawArrow([15,15,0], v_w_vec)
 %%----------------- Set up the movie.
-movie_flag = 1;
+movie_flag = 0;
 if movie_flag
     writerObj = VideoWriter('flight.avi'); % Name it.
     writerObj.FrameRate = 60; % How many frames per second.
@@ -218,3 +218,62 @@ plot([0 40],[0.5 0.5], '--r', 'Linewidth', 2 );
 xlabel('Time [s]')
 ylabel('Difference CG Drone and Tetherlength [m]')
 
+figure;
+grid on
+hold on
+plot( t_vec,V_save, 'color', '[ 0    0.4470    0.7410]', 'Linewidth', 2 );
+hold on
+xlabel('Time [s]')
+ylabel('V [-]')
+
+%% robustness mod analysis
+figure;
+set(gca,'fontsize',18)
+grid on
+hold on
+plot( t_vec,e_pref_mu.Data(:,1), 'color', '[ 0    0.4470    0.7410]', 'Linewidth', 2 );
+hold on
+plot( t_vec,e_pref_mu.Data(:,2), 'color', '[  0.8500    0.3250    0.0980]', 'Linewidth', 2 );
+plot( [0 T_sim],[delta_dead*e_0 delta_dead*e_0], 'color', '[ 0.4660    0.6740    0.1880]', 'Linewidth', 2, 'Linestyle', '--' );
+hold on
+plot( [0 T_sim],[e_0 e_0], 'color', '[ 0.4660    0.6740    0.1880]', 'Linewidth', 2, 'Linestyle', '--' );
+hold on
+xlabel('Time [s]')
+legend('e_{ref}', '\mu_{dead}','deadzone' )
+
+figure;
+set(gca,'fontsize',18)
+grid on
+hold on
+plot( t_vec,e_ref_mu.Data(:,1), 'color', '[ 0    0.4470    0.7410]', 'Linewidth', 2 );
+hold on
+plot( t_vec,e_ref_mu.Data(:,2), 'color', '[  0.8500    0.3250    0.0980]', 'Linewidth', 2 );
+hold on
+plot( [0 T_sim],[delta_dead*e_0 delta_dead*e_0], 'color', '[ 0.4660    0.6740    0.1880]', 'Linewidth', 2, 'Linestyle', '--' );
+hold on
+plot( [0 T_sim],[e_0 e_0], 'color', '[ 0.4660    0.6740    0.1880]', 'Linewidth', 2, 'Linestyle', '--' );
+hold on
+xlabel('Time [s]')
+legend('e_{ref}', '\mu_{dead}','deadzone' )
+
+%% Projection operator
+figure;
+set(gca,'fontsize',14)
+grid on
+hold on 
+theta_f = linspace(-Theta_max, Theta_max, 1000);
+theta_f_b = linspace(-Theta_max*epsilon, Theta_max*epsilon, 1000);
+f = ( ( (1+epsilon)*(theta_f).^2 - (Theta_max).^2 ) ./ (epsilon*(Theta_max).^2) );
+plot(theta_f, f,'color', '[ 0    0.4470    0.7410]', 'Linewidth', 2 );
+hold on 
+plot([Theta_max/sqrt(1+epsilon) Theta_max/sqrt(1+epsilon)], [-1.5 1], 'color', '[  0.8500    0.3250    0.0980]', 'Linewidth', 2, 'Linestyle', '--')
+plot([-Theta_max/sqrt(1+epsilon) -Theta_max/sqrt(1+epsilon)], [-1.5 1],'color', '[  0.8500    0.3250    0.0980]', 'Linewidth', 2, 'Linestyle', '--')
+hold on
+plot([Theta_max Theta_max], [-1.5 1], 'color', '[  0.8500    0.3250    0.0980]', 'Linewidth', 2, 'Linestyle', '--')
+plot([-Theta_max -Theta_max], [-1.5 1],'color', '[  0.8500    0.3250    0.0980]', 'Linewidth', 2, 'Linestyle', '--')
+hold on
+plot( disturbance_estimation_z.Data(:,2),max(proj_flat.Data(:,2).*proj_flat.Data(:,1),  0),...
+    '*','MarkerEdgeColor','[   0.4660    0.6740    0.1880]','MarkerSize', 5, 'Linewidth', 0.1);
+
+xlabel('dz_{est}')
+ylabel('f(dz_{est})')
