@@ -14,7 +14,7 @@ t0 = 3;
 t1 = 5; 
 
 T_ro_init = 0;
-T_sim = 20;
+T_sim = 10;
 T_launch = 40;
 dt = 0.002;
 sample_log = 0.01;
@@ -151,7 +151,7 @@ C_A_inv = C_A \eye(4) ;
 
 % State space form Actuator (first order lag)
 % Actuator limits (propeller thrust)
-Thrust_Max = 300; % N 
+Thrust_Max = 250; % N 
 
 A_act = -100*eye(4);
 B_act = 100*eye(4);

@@ -277,3 +277,106 @@ plot( disturbance_estimation_z.Data(:,2),max(proj_flat.Data(:,2).*proj_flat.Data
 
 xlabel('dz_{est}')
 ylabel('f(dz_{est})')
+
+
+%% Hedging
+
+% ---- Propeller thrusts ----
+figure;
+subplot(221)
+grid on
+hold on
+plot(t_vec, prop_thrust_cmd.Data(:,1),'color', '[ 0    0.4470    0.7410]', 'Linewidth', 1.5 );
+hold on
+plot(t_vec, prop_thrust_real.Data(:,1),'color', '[   0.4660    0.6740    0.1880]', 'Linewidth', 1.5 );
+hold on 
+plot( [0 T_sim],[Thrust_Max Thrust_Max], 'color', '[  0.8500    0.3250    0.0980]', 'Linewidth', 2, 'Linestyle', '--' );
+hold on 
+plot( [0 T_sim],[-Thrust_Max -Thrust_Max], 'color', '[  0.8500    0.3250    0.0980]', 'Linewidth', 2, 'Linestyle', '--' );
+ylabel('F_1')
+
+subplot(222)
+grid on
+hold on
+plot(t_vec, prop_thrust_cmd.Data(:,2),'color', '[ 0    0.4470    0.7410]', 'Linewidth', 1.5 );
+hold on
+plot(t_vec, prop_thrust_real.Data(:,2),'color', '[   0.4660    0.6740    0.1880]', 'Linewidth', 1.5 );
+hold on 
+plot( [0 T_sim],[Thrust_Max Thrust_Max], 'color', '[  0.8500    0.3250    0.0980]', 'Linewidth', 2, 'Linestyle', '--' );
+hold on 
+plot( [0 T_sim],[-Thrust_Max -Thrust_Max], 'color', '[  0.8500    0.3250    0.0980]', 'Linewidth', 2, 'Linestyle', '--' );
+ylabel('F_2')
+
+subplot(223)
+grid on
+hold on
+plot(t_vec, prop_thrust_cmd.Data(:,3),'color', '[ 0    0.4470    0.7410]', 'Linewidth', 1.5 );
+hold on
+plot(t_vec, prop_thrust_real.Data(:,3),'color', '[   0.4660    0.6740    0.1880]', 'Linewidth', 1.5 );
+hold on 
+plot( [0 T_sim],[Thrust_Max Thrust_Max], 'color', '[  0.8500    0.3250    0.0980]', 'Linewidth', 2, 'Linestyle', '--' );
+hold on 
+plot( [0 T_sim],[-Thrust_Max -Thrust_Max], 'color', '[  0.8500    0.3250    0.0980]', 'Linewidth', 2, 'Linestyle', '--' );
+ylabel('F_3')
+
+subplot(224)
+grid on
+hold on
+plot(t_vec, prop_thrust_cmd.Data(:,4),'color', '[ 0    0.4470    0.7410]', 'Linewidth', 1.5 );
+hold on
+plot(t_vec, prop_thrust_real.Data(:,4),'color', '[   0.4660    0.6740    0.1880]', 'Linewidth', 1.5 );
+hold on 
+plot( [0 T_sim],[Thrust_Max Thrust_Max], 'color', '[  0.8500    0.3250    0.0980]', 'Linewidth', 2, 'Linestyle', '--' );
+hold on 
+plot( [0 T_sim],[-Thrust_Max -Thrust_Max], 'color', '[  0.8500    0.3250    0.0980]', 'Linewidth', 2, 'Linestyle', '--' );
+ylabel('F_4')
+
+legend('F_{CMD}','F','F_{max}','F_{min}')
+
+%% ---- Resulting moments and total thrust (considering rotational direction) ----
+%    o1
+% o4-x--o2
+%    o3
+% (script FSD, quadcopter experiment)
+
+LMNT_cmd = C_A * [prop_thrust_cmd.Data(:,1), prop_thrust_cmd.Data(:,2), prop_thrust_cmd.Data(:,3), prop_thrust_cmd.Data(:,4)]';
+LMNT_real = C_A * [prop_thrust_real.Data(:,1), prop_thrust_real.Data(:,2), prop_thrust_real.Data(:,3), prop_thrust_real.Data(:,4)]';
+
+figure;
+subplot(221)
+grid on
+hold on
+plot(t_vec, LMNT_cmd(1,:),'color', '[ 0    0.4470    0.7410]', 'Linewidth', 1.5 );
+hold on
+plot(t_vec, LMNT_real(1,:),'color', '[   0.4660    0.6740    0.1880]', 'Linewidth', 1.5 );
+hold on 
+ylabel('L [Nm]')
+
+subplot(222)
+grid on
+hold on
+plot(t_vec,LMNT_cmd(2,:),'color', '[ 0    0.4470    0.7410]', 'Linewidth', 1.5 );
+hold on
+plot(t_vec, LMNT_real(2,:),'color', '[   0.4660    0.6740    0.1880]', 'Linewidth', 1.5 );
+hold on 
+ylabel('M [Nm]')
+
+subplot(223)
+grid on
+hold on
+plot(t_vec, LMNT_cmd(3,:),'color', '[ 0    0.4470    0.7410]', 'Linewidth', 1.5 );
+hold on
+plot(t_vec, LMNT_real(3,:),'color', '[   0.4660    0.6740    0.1880]', 'Linewidth', 1.5 );
+hold on 
+ylabel('N [Nm]')
+
+subplot(224)
+grid on
+hold on
+plot(t_vec, LMNT_cmd(4,:),'color', '[ 0    0.4470    0.7410]', 'Linewidth', 1.5 );
+hold on
+plot(t_vec, LMNT_real(4,:),'color', '[   0.4660    0.6740    0.1880]', 'Linewidth', 1.5 );
+hold on 
+ylabel('T [N]')
+
+legend('CMD','REAL')
