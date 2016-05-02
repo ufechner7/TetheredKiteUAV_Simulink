@@ -25,7 +25,7 @@ Izz = 0.009;
 J = diag([Ixx, Iyy, Izz]); 
 Jinv = J \ eye(3); 
 
-m_uav = 5; 
+m_uav = 3; 
 
 g = 9.81; 
 
@@ -50,7 +50,7 @@ ASideRel = 0*0.1*0.3;
 C_L_Kite = 0.1*0.1;
 C_D_Kite = 0.1*0.05;
 % --- Payload 
-m_kite = 15;
+m_kite = 7;
 m_ges = m_kite + m_uav ;
 
 
@@ -149,12 +149,12 @@ C_A = [0, -R, 0, R;
 C_A_inv = C_A \eye(4) ;
 
 
-% State space form Actuator (first order lag)
-% Actuator limits (propeller thrust)
-Thrust_Max = 250; % N 
+% Actuator limits (max. thrust per propeller)
+Thrust_Max = 40; % N  
 
-A_act = -100*eye(4);
-B_act = 100*eye(4);
+% State space form Actuator (first order lag)
+A_act = -60*eye(4);
+B_act = 60*eye(4);
 
 
 

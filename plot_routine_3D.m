@@ -49,7 +49,7 @@ hold on
 
 view([45,10])
 quadcopterh = [];
-%axis equal
+axis equal
 plot3( x_ref, y_ref, z_ref,'color', '0.7500    0.7500  0', 'Linewidth', 1.5, 'Linestyle', '--' )
 hold on drawArrow( p_CG_is, F_T_trafo )
 drawArrow = @(a,b) quiver3( a(1),a(2),a(3),...
@@ -348,7 +348,7 @@ grid on
 hold on
 plot(t_vec, LMNT_cmd(1,:),'color', '[ 0    0.4470    0.7410]', 'Linewidth', 1.5 );
 hold on
-plot(t_vec, LMNT_real(1,:),'color', '[   0.4660    0.6740    0.1880]', 'Linewidth', 1.5 );
+plot(t_vec, LMNT_real(1,:), 'Linewidth', 1.5 );
 hold on 
 ylabel('L [Nm]')
 
@@ -357,7 +357,7 @@ grid on
 hold on
 plot(t_vec,LMNT_cmd(2,:),'color', '[ 0    0.4470    0.7410]', 'Linewidth', 1.5 );
 hold on
-plot(t_vec, LMNT_real(2,:),'color', '[   0.4660    0.6740    0.1880]', 'Linewidth', 1.5 );
+plot(t_vec, LMNT_real(2,:), 'Linewidth', 1.5 );
 hold on 
 ylabel('M [Nm]')
 
@@ -366,7 +366,7 @@ grid on
 hold on
 plot(t_vec, LMNT_cmd(3,:),'color', '[ 0    0.4470    0.7410]', 'Linewidth', 1.5 );
 hold on
-plot(t_vec, LMNT_real(3,:),'color', '[   0.4660    0.6740    0.1880]', 'Linewidth', 1.5 );
+plot(t_vec, LMNT_real(3,:), 'Linewidth', 1.5 );
 hold on 
 ylabel('N [Nm]')
 
@@ -375,8 +375,64 @@ grid on
 hold on
 plot(t_vec, LMNT_cmd(4,:),'color', '[ 0    0.4470    0.7410]', 'Linewidth', 1.5 );
 hold on
-plot(t_vec, LMNT_real(4,:),'color', '[   0.4660    0.6740    0.1880]', 'Linewidth', 1.5 );
+plot(t_vec, LMNT_real(4,:), 'Linewidth', 1.5 );
 hold on 
 ylabel('T [N]')
 
+legend('CMD','REAL')
+
+
+%% -- Compare reference model with slowed down reference model 
+% Rotatory dynamics
+figure;
+subplot(311)
+grid on 
+hold on 
+plot(t_vec, original_rot_ref.Data(:,1), 'Linewidth', 1.5 );
+hold on 
+plot(t_vec, slowed_rot_ref.Data(:,1), 'Linewidth', 1.5 );
+ylabel('nu_{x,trans}')
+
+subplot(312)
+grid on 
+hold on 
+plot(t_vec, original_rot_ref.Data(:,2), 'Linewidth', 1.5 );
+hold on 
+plot(t_vec, slowed_rot_ref.Data(:,2), 'Linewidth', 1.5 );
+ylabel('nu_{y,trans}')
+
+subplot(313)
+grid on 
+hold on 
+plot(t_vec, original_rot_ref.Data(:,3), 'Linewidth', 1.5 );
+hold on 
+plot(t_vec, slowed_rot_ref.Data(:,3), 'Linewidth', 1.5 );
+ylabel('nu_{z,trans}')
+legend('CMD','REAL')
+
+% Translational dynamics 
+figure;
+subplot(311)
+grid on 
+hold on 
+plot(t_vec, original_trans_ref.Data(:,1), 'Linewidth', 1.5 );
+hold on 
+plot(t_vec, slowed_trans_ref.Data(1,:), 'Linewidth', 1.5 );
+ylabel('nu_{x,rot}')
+
+subplot(312)
+grid on 
+hold on 
+plot(t_vec, original_trans_ref.Data(:,2), 'Linewidth', 1.5 );
+hold on 
+plot(t_vec, slowed_trans_ref.Data(2,:), 'Linewidth', 1.5 );
+ylabel('nu_{y,rot}')
+
+subplot(313)
+grid on 
+hold on 
+plot(t_vec, original_trans_ref.Data(:,3), 'Linewidth', 1.5 );
+hold on 
+plot(t_vec, slowed_trans_ref.Data(3,:), 'Linewidth', 1.5 );
+ylabel('nu_{z,rot}')
 legend('CMD','REAL')
