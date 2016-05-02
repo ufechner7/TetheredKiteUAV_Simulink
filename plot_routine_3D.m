@@ -10,9 +10,9 @@ y_is = p_is.Data(:,2);
 z_is = p_is.Data(:,3);
 
 % Reference Drone
-x_ref = p_ref.Data(:,1);
-y_ref = p_ref.Data(:,2);
-z_ref = p_ref.Data(:,3);
+x_ref = p_ref.Data(1,:);
+y_ref = p_ref.Data(2,:);
+z_ref = p_ref.Data(3,:);
 
 %% --- TETHER --
 x_vec =  x_save.Data;
