@@ -145,3 +145,14 @@ C_A = [0, -R, 0, R;
     1, 1, 1, 1];
 
 C_A_inv = C_A \eye(4) ;
+
+
+% State space form Actuator (first order lag)
+% Actuator limits (propeller thrust)
+Thrust_Max = 300; % N 
+
+A_act = -100*eye(4);
+B_act = 100*eye(4);
+
+
+
