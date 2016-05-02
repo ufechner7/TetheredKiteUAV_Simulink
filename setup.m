@@ -6,6 +6,8 @@ clc
 %%% automatically. Please just run the Simulink model
 %%% model_groundTethered.slx
 
+% Load busses
+load('drone_states_bus.mat');
 
 % Trajectory generator
 t0 = 3; 
