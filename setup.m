@@ -10,14 +10,25 @@ clc
 load('drone_states_bus.mat');
 
 % Trajectory generator
-t0 = 3; 
-t1 = 5; 
+t0 = 1; 
+t1 = 3; 
 
 T_ro_init = 0;
-T_sim = 10;
+T_sim = 20;
 T_launch = 40;
 dt = 0.002;
 sample_log = 0.01;
+l_t = 10; % initial tether length
+
+Tx = 10;
+xT = 5;
+Ty = 10;
+yT = 10;
+Tz = 10;
+zT = 50;
+
+polynomial_trajectory; % calculate a trajectory
+
 
 Ixx = 0.018; 
 Iyy = 0.018;
@@ -45,20 +56,18 @@ l_s0 = l_t/n; % segment length
 m_p = l_s0 * rho_t; % particle weight at initial segment length
 
 %% Kite Aerodynamics
-A_Kite = 10;
-ASideRel = 0*0.1*0.3;
-C_L_Kite = 0.1*0.1;
-C_D_Kite = 0.1*0.05;
+A_Kite = 7;
+ASideRel = 0*0.3;
+C_L_Kite = 0.1;
+C_D_Kite = 0.05;
 % --- Payload 
 m_kite = 7;
 m_ges = m_kite + m_uav ;
 
 
 %% ================================ Controller Section ================================
-% Translational Dynamics
 
-
-% Reference model rotational dynamics
+%% Reference model rotational dynamics
 A_ref = zeros(6); 
 A_ref(1:3, 4:6) = eye(3); 
 omega_ref = 100; 
@@ -73,12 +82,12 @@ k_e_eta = omega_ref^2;
 k_e_eta_dot = 2*damp_ref * omega_ref; 
 k_e_eta_I = 1;
 
-% Reference Model Translational Dynamics
+%% Reference Model Translational Dynamics
 A_t_ref = zeros(6); 
 A_t_ref(1:3, 4:6 ) = eye(3); 
 A_t_ref_cl = A_t_ref;
 
-omega_0_trans = 0.7;
+omega_0_trans = 0.8;
 zeta_0_trans = 1;
 A_t_ref_cl(4:6,1:3) = -omega_0_trans^2*eye(3);
 A_t_ref_cl(4:6,4:6) = -2*omega_0_trans*zeta_0_trans*eye(3);
@@ -150,11 +159,11 @@ C_A_inv = C_A \eye(4) ;
 
 
 % Actuator limits (max. thrust per propeller)
-Thrust_Max = 40; % N  
+Thrust_Max = 80; % N  
 
 % State space form Actuator (first order lag)
-A_act = -60*eye(4);
-B_act = 60*eye(4);
+A_act = -100*eye(4);
+B_act = 100*eye(4);
 
 
 

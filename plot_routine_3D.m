@@ -1,4 +1,3 @@
-% add x,y coordinates (not simulated in the script, only for visualization)
 close all
 
 sim_len = length( p_is.Data );
