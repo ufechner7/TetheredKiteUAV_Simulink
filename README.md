@@ -13,3 +13,5 @@ calcTransformationEB.m => Returns the transformation matrix between the bodyfixe
 plot_routine_3D.m => for visualization of the simulation results 
 setup.m => is executed before the simulink simulation. initialization of all relevant parameters. 
 polynomial_trajectory.m => calculates a fligh path of 5th order depending on final height and flight duration.
+calc4pKiteForces.m => Here the aero forces of the 4p model are calculated
+plotCLandCDCurves.m = > Here the Cl and the Cd curves are determined based on a cubic spline interpolation.
