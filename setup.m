@@ -46,6 +46,7 @@ CD_tether = 0.96;
 v_w_vec = [1;1;1]; %m/s
 % number of masses 
 n = 10;
+n_t_p = 7; %number of tether particles
 c0 =  614000; % stiffness
 d0 = 473; % damping
 rho_t = 0.013; % mass density tetherr kg/m
@@ -160,13 +161,9 @@ C_A = [0, -R, 0, R;
 
 C_A_inv = C_A \eye(4) ;
 
-
 % Actuator limits (max. thrust per propeller)
 Thrust_Max = 80; % N  
 
 % State space form Actuator (first order lag)
 A_act = -100*eye(4);
 B_act = 100*eye(4);
-
-
-
