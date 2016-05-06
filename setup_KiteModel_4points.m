@@ -13,14 +13,20 @@ h_bridle = 4.9; % Distance between Pc and P_kcu
 w_k = 5.77;% Distance between C and D
 d_n_r = 0.2;% relative nose distance. in combinatino with nose_mass_fraction it can be used to tune the rot. inertia + CG
 w_rel = 0.9; % reflects the fact that the aerodynamic steering forces do not act on the tips of the kite but further inwards
+A_kite_4p = 20;
 
 % Aerodynamics
 alpha_s_0 = 10 * pi/180;
+alpha_0 = 10 * pi/180; 
 alpha_s_max = 20 * pi/180; % max. angle of attack caused by the steering line difference 
 K_d_s = 1.5; % describes the influence of the depower angle on the steering sensitivity
 K = 1 - ASideRel;
 load('CL_spline'); % load the spline curve of CL over AoA
 load('CD_spline'); % load the spline curve of CD over AoA
+
+CL_spline_coefs = CL_spline.coefs;
+CD_spline_coefs = CD_spline.coefs;
+
 alpha_d_max = 31 * pi/180; % max. depower angle 
 u_d_0 = 0.213; % depower ofset
 u_max = 0.47;
@@ -28,7 +34,7 @@ u_max = 0.47;
 % Initial position kite particles
 P_kcu = p_init( 3*(n-2)-2:3*(n-2)  );
 Pc_init = P_kcu + [0;0;1]*h_bridle; 
-A_init = Pc_init + d_n_r * w_k * w_rel * [1;0;0];
+A_init = Pc_init + d_n_r * w_k * w_rel * [-1;0;0];
 B_init = Pc_init + h_kite * [0;0;1;];
 C_init = Pc_init + 0.5 * w_k * w_rel * [0;1;0];
 D_init = Pc_init - 0.5 * w_k * w_rel * [0;1;0];
