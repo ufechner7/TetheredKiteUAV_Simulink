@@ -64,7 +64,8 @@ C_D_Kite = 0.05;
 m_kite = 7;
 m_ges = m_kite + m_uav ;
 
-
+% Load the 4p kite model 
+setup_KiteModel_4points;
 %% ================================ Controller Section ================================
 
 %% Reference model rotational dynamics
