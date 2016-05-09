@@ -43,7 +43,7 @@ g = 9.81;
 %% Stuff related to the tether aerodynamics (Model Uwe)
 d_tether = 0.004; % meters
 CD_tether = 0.96;
-v_w_vec = [1;1;1]; %m/s
+v_w_vec = [1;0;0]; %m/s
 % number of masses 
 n = 10;
 n_t_p = 7; %number of tether particles
@@ -52,22 +52,29 @@ d0 = 473; % damping
 rho_t = 0.013; % mass density tetherr kg/m
 g_vec = [0;0;9.81]; % gravity
 rho_air = 1.225; % air density
-l_t = 10; % initial tether length
 l_s0 = l_t/n; % segment length
 m_p = l_s0 * rho_t; % particle weight at initial segment length
 
+
 %% Kite Aerodynamics
-A_Kite = 7;
-ASideRel = 0*0.3;
-C_L_Kite = 0.1;
-C_D_Kite = 0.05;
+A_Kite = 10.18;
+ASideRel = 0* 0.3;
+C_L_Kite = 0.1*0.1;
+C_D_Kite = 0.1*0.05;
 % --- Payload 
 m_kite = 7;
 m_ges = m_kite + m_uav ;
 
+% Initialization of plant states
+p_init = zeros(3*n,1);
+p_init(3:3:3*n) = linspace(l_s0,l_t,n)'; % inital position of the tether segments
+x_drone_init = p_init(3*n-2:3*n); % inital postion of the drone
+omega_init = zeros(3,1); % initial rates of the drone
+eta_init = zeros(3,1); % initial attitude of the drone
+T_detach = 30;
+
 % Load the 4p kite model 
 setup_KiteModel_4points;
-
 
 %% ================================ Controller Section ================================
 
@@ -102,15 +109,6 @@ K_x_t = omega_0_trans^2*eye(3);
 %K_v_t =4* 2*omega_0_trans*zeta_0_trans*eye(3); 
 K_v_t = 2*omega_0_trans*zeta_0_trans*eye(3); 
 K_i_t = 10*eye(3);
-
-% Initializations
-p_init = zeros(3*n,1);
-p_init(3:3:3*n) = linspace(l_s0,l_t,n)'; % inital position of the tether segments
-x_drone_init = p_init(3*n-2:3*n); % inital postion of the drone
-omega_init = zeros(3,1); % initial rates of the drone
-eta_init = zeros(3,1); % initial attitude of the drone
-
-T_detach = 30;
 
 % Adaptive augmentation for translational dynamics
 A_M_aug = [zeros(3), eye(3);
@@ -167,3 +165,4 @@ Thrust_Max = 80; % N
 % State space form Actuator (first order lag)
 A_act = -100*eye(4);
 B_act = 100*eye(4);
+
