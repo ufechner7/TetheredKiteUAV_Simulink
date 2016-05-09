@@ -35,10 +35,10 @@ g = 9.81;
 %% Stuff related to the tether aerodynamics (Model Uwe)
 d_tether = 0.004; % meters
 CD_tether = 0.96;
-v_w_vec = [0.1;0;0]; %m/s
+v_w_vec = [1;0;0]; %m/s
 % number of masses 
 n = 10;
-n_t_p = 7; %number of tether particles
+n_t_p = 5; %number of tether particles
 c0 =  614000; % stiffness
 d0 = 473; % damping
 rho_t = 0.013; % mass density tetherr kg/m
@@ -73,9 +73,9 @@ setup_KiteModel_4points;
 
 %% Polynomial flight path
 Tx = 10;
-xT = 1;
+xT = 10;
 Ty = 10;
-yT = 1;
+yT = 0;
 Tz = 10;
 zT = 50;
 
