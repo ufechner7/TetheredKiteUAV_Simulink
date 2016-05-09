@@ -20,14 +20,6 @@ dt = 0.002;
 sample_log = 0.01;
 l_t = 10; % initial tether length
 
-Tx = 10;
-xT = 5;
-Ty = 10;
-yT = 10;
-Tz = 10;
-zT = 50;
-
-polynomial_trajectory; % calculate a trajectory
 
 
 Ixx = 0.018; 
@@ -43,7 +35,7 @@ g = 9.81;
 %% Stuff related to the tether aerodynamics (Model Uwe)
 d_tether = 0.004; % meters
 CD_tether = 0.96;
-v_w_vec = [1;0;0]; %m/s
+v_w_vec = [0.1;0;0]; %m/s
 % number of masses 
 n = 10;
 n_t_p = 7; %number of tether particles
@@ -62,7 +54,7 @@ ASideRel = 0* 0.3;
 C_L_Kite = 0.1*0.1;
 C_D_Kite = 0.1*0.05;
 % --- Payload 
-m_kite = 7;
+m_kite = 5;7;
 m_ges = m_kite + m_uav ;
 
 % Initialization of plant states (1p)
@@ -78,6 +70,17 @@ p_init_4p(3:3:3*n_t_p) = linspace(l_s0,l_t,n_t_p)'; % inital position of the tet
 
 % Load the 4p kite model 
 setup_KiteModel_4points;
+
+%% Polynomial flight path
+Tx = 10;
+xT = 1;
+Ty = 10;
+yT = 1;
+Tz = 10;
+zT = 50;
+
+polynomial_trajectory; % calculate a trajectory
+
 
 
 %% ================================ Controller Section ================================
@@ -164,7 +167,7 @@ C_A = [0, -R, 0, R;
 C_A_inv = C_A \eye(4) ;
 
 % Actuator limits (max. thrust per propeller)
-Thrust_Max = 80; % N  
+Thrust_Max = 1e9; % N  
 
 % State space form Actuator (first order lag)
 A_act = -100*eye(4);

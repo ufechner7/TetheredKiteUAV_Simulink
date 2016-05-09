@@ -49,6 +49,7 @@ D_init = Pc_init - 0.5 * w_k * w_rel * [0;1;0];
 % Tether between kite and drone
 p_B_UAV_init = B_init + [0;0;l_s0];
 pos_UAV_init = p_B_UAV_init + [0;0;l_s0];
+x_drone_init = pos_UAV_init;
 
 % Length bridlelines
 ls_AC = norm( A_init -  C_init);

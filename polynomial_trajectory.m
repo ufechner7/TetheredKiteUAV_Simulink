@@ -53,7 +53,8 @@ zref = z5 * t^5 + z4 * t^4 + z3 * t^3 + z2 * t^2 + z1 * t + z0;
 zref_dot = diff(zref,t);
 zref_dotdot = diff(zref_dot,t);
 
-Fz = [subs( zref, t, 0) == l_t;
+
+Fz = [subs( zref, t, 0) == x_drone_init(3);
     subs( zref_dot, t, 0) == 0;
     subs( zref_dot, t, Tz) == 0;
     subs( zref_dotdot, t, 0) == 0;
