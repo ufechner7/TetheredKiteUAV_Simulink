@@ -46,17 +46,23 @@ B_init = Pc_init + h_kite * [0;0;1;];
 C_init = Pc_init + 0.5 * w_k * w_rel * [0;1;0];
 D_init = Pc_init - 0.5 * w_k * w_rel * [0;1;0];
 
-% Length dridlelines
+% Tether between kite and drone
+p_B_UAV_init = B_init + [0;0;l_s0];
+pos_UAV_init = p_B_UAV_init + [0;0;l_s0];
+
+% Length bridlelines
 ls_AC = norm( A_init -  C_init);
 ls_AB = norm( A_init -  B_init);
 ls_AKcu = norm( A_init -  P_kcu);
 ls_AD = norm( A_init -  D_init);
 ls_CB = norm( C_init -  B_init);
 ls_CD = norm( C_init -  D_init);
-ls_CKcu = norm( C_init -  P_kcu);
-ls_DKcu = norm( D_init -  P_kcu);
-ls_DB = norm( D_init -  B_init);
+ls_CKcu = norm( C_init - P_kcu);
+ls_DKcu = norm( D_init - P_kcu);
+ls_DB = norm( D_init - B_init );
 
+l_s_PUav =  norm( pos_UAV_init - p_B_UAV_init); % initial tether segment length between particle and uav
+l_s_BP = norm( B_init - p_B_UAV_init); % initial tether segment length between particle and kite
 
 %% Plot kite geometry
 if 0

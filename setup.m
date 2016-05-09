@@ -52,7 +52,7 @@ d0 = 473; % damping
 rho_t = 0.013; % mass density tetherr kg/m
 g_vec = [0;0;9.81]; % gravity
 rho_air = 1.225; % air density
-l_s0 = l_t/n; % segment length
+l_s0 = l_t/n_t_p; % segment length
 m_p = l_s0 * rho_t; % particle weight at initial segment length
 
 
@@ -65,16 +65,20 @@ C_D_Kite = 0.1*0.05;
 m_kite = 7;
 m_ges = m_kite + m_uav ;
 
-% Initialization of plant states
+% Initialization of plant states (1p)
 p_init = zeros(3*n,1);
 p_init(3:3:3*n) = linspace(l_s0,l_t,n)'; % inital position of the tether segments
 x_drone_init = p_init(3*n-2:3*n); % inital postion of the drone
 omega_init = zeros(3,1); % initial rates of the drone
 eta_init = zeros(3,1); % initial attitude of the drone
 T_detach = 30;
+% Initialization of plant states (4p)
+p_init_4p = zeros(3*n_t_p,1);
+p_init_4p(3:3:3*n_t_p) = linspace(l_s0,l_t,n_t_p)'; % inital position of the tether segments
 
 % Load the 4p kite model 
 setup_KiteModel_4points;
+
 
 %% ================================ Controller Section ================================
 
