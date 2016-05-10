@@ -48,7 +48,7 @@ hold on
 
 view([45,10])
 quadcopterh = [];
-%axis equal
+axis equal
 plot3( x_ref, y_ref, z_ref,'color', '0.7500    0.7500  0', 'Linewidth', 1.5, 'Linestyle', '--' )
 hold on drawArrow( p_CG_is, F_T_trafo )
 drawArrow = @(a,b) quiver3( a(1),a(2),a(3),...
@@ -136,7 +136,7 @@ for step = 1 : 10 : sim_len
         writeVideo(writerObj, frame);
     end
     drawnow
-    pause(1)
+    pause(0.01)
 end
 %%
 

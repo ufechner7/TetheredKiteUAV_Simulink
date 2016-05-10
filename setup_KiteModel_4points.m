@@ -40,7 +40,7 @@ CL_spline_coefs = CL_spline.coefs;
 CD_spline_coefs = CD_spline.coefs;
 
 % Initial position kite particles
-P_kcu = p_init( 3*(n-2)-2:3*(n-2)  );
+P_kcu = p_init_4p( 3*(n_t_p)-2:3*(n_t_p)  );
 Pc_init = P_kcu + [0;0;1]*h_bridle;
 A_init = Pc_init + d_n_r * w_k * w_rel * [-1;0;0];
 B_init = Pc_init + h_kite * [0;0;1;];
