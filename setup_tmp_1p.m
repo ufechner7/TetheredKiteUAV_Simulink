@@ -20,8 +20,6 @@ dt = 0.002;
 sample_log = 0.01;
 l_t = 10; % initial tether length
 
-
-
 Ixx = 0.018; 
 Iyy = 0.018;
 Izz = 0.009;
@@ -38,7 +36,7 @@ CD_tether = 0.96;
 v_w_vec = [1;0;0]; %m/s
 % number of masses 
 n = 10;
-n_t_p = 5; %number of tether particles
+n_t_p = n-3; %number of tether particles
 c0 =  614000; % stiffness
 d0 = 473; % damping
 rho_t = 0.013; % mass density tetherr kg/m
@@ -46,7 +44,6 @@ g_vec = [0;0;9.81]; % gravity
 rho_air = 1.225; % air density
 l_s0 = l_t/n_t_p; % segment length
 m_p = l_s0 * rho_t; % particle weight at initial segment length
-
 
 %% Kite Aerodynamics
 A_Kite = 10.18;
@@ -65,23 +62,21 @@ omega_init = zeros(3,1); % initial rates of the drone
 eta_init = zeros(3,1); % initial attitude of the drone
 T_detach = 30;
 % Initialization of plant states (4p)
-p_init_4p = zeros(3*n_t_p,1);
-p_init_4p(3:3:3*n_t_p) = linspace(l_s0,l_t,n_t_p)'; % inital position of the tether segments
+%p_init_4p = zeros(3*n_t_p,1);
+%p_init_4p(3:3:3*n_t_p) = linspace(l_s0,l_t,n_t_p)'; % inital position of the tether segments
 
 % Load the 4p kite model 
-setup_KiteModel_4points;
+%setup_KiteModel_4points;
 
 %% Polynomial flight path
 Tx = 10;
 xT = 10;
 Ty = 10;
 yT = 0;
-Tz = 10;
+Tz = l_t;
 zT = 50;
 
 polynomial_trajectory; % calculate a trajectory
-
-
 
 %% ================================ Controller Section ================================
 
@@ -167,7 +162,7 @@ C_A = [0, -R, 0, R;
 C_A_inv = C_A \eye(4) ;
 
 % Actuator limits (max. thrust per propeller)
-Thrust_Max = 1e9; % N  
+Thrust_Max = 100; % N  
 
 % State space form Actuator (first order lag)
 A_act = -100*eye(4);
