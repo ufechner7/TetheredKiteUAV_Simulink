@@ -20,6 +20,11 @@ alpha_0 = 10 * pi/180;
 alpha_s_max = 20 * pi/180; % max. angle of attack caused by the steering line difference
 K_d_s = 1.5; % describes the influence of the depower angle on the steering sensitivity
 K = 1 - ASideRel;
+alpha_d_max = 31 * pi/180; % max. depower angle
+u_d_0 = 0.213; % depower ofset
+u_s_0 = 0;
+u_d_max = 0.47;
+c_1_TR = 0.262;
 
 % Cl and Cd for the kite
 ALPHA_CL = [-180.0, -160.0, -90.0, -20.0, -10.0,  -5.0,  0.0, 20.0, 40.0, 90.0, 160.0, 180.0];
@@ -33,10 +38,6 @@ CL_spline =spline(ALPHA_CL,CL_LIST);
 CD_spline =spline(ALPHA_CD,CD_LIST);
 CL_spline_coefs = CL_spline.coefs;
 CD_spline_coefs = CD_spline.coefs;
-
-alpha_d_max = 31 * pi/180; % max. depower angle
-u_d_0 = 0.213; % depower ofset
-u_max = 0.47;
 
 % Initial position kite particles
 P_kcu = p_init( 3*(n-2)-2:3*(n-2)  );

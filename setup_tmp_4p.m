@@ -14,7 +14,7 @@ t0 = 1;
 t1 = 3; 
 
 T_ro_init = 0;
-T_sim = 20;
+T_sim = 2;
 T_launch = 40;
 dt = 0.002;
 sample_log = 0.01;
@@ -54,7 +54,8 @@ ASideRel = 0* 0.3;
 C_L_Kite = 0.1*0.1;
 C_D_Kite = 0.1*0.05;
 % --- Payload 
-m_kite = 5;7;
+m_kite = 6.21;
+m_kcu = 8.4;
 m_ges = m_kite + m_uav ;
 
 % Initialization of plant states (1p)
@@ -172,4 +173,10 @@ Thrust_Max = 1e9; % N
 % State space form Actuator (first order lag)
 A_act = -100*eye(4);
 B_act = 100*eye(4);
+
+%% Kite Controller 
+
+% Reference model turn rate law
+a_TR_ref = 10;
+K_e_psi = 10;
 
