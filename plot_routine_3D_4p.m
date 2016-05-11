@@ -42,7 +42,8 @@ xlabel('x [m]')
 ylabel('y [m]')
 zlabel('z [m]')
 
-axis([ min( min( x_vec ) ) max( max(x_vec))  min(min(y_vec)) max(max(y_vec))  max(min(min(z_vec)),0) max(max(z_vec))  ])
+%axis([ min( min( x_vec ) ) max( max(x_vec))  min(min(y_vec)) max(max(y_vec))  max(min(min(z_vec)),0) max(max(z_vec))  ])
+axis([-10 10 -10 10 0 80])
 
 hold on
 
@@ -53,7 +54,7 @@ plot3( x_ref, y_ref, z_ref,'color', '0.7500    0.7500  0', 'Linewidth', 1.5, 'Li
 hold on drawArrow( p_CG_is, F_T_trafo )
 drawArrow = @(a,b) quiver3( a(1),a(2),a(3),...
     b(1), b(2), b(3), '-r', 'Linewidth', 1.5 ) ;
-drawArrow([15,15,0], v_w_vec)
+% drawArrow([15,15,0], v_w_vec)
 %%----------------- Set up the movie.
 movie_flag = 1;
 if movie_flag
@@ -136,7 +137,7 @@ for step = 1 : 10 : sim_len
         writeVideo(writerObj, frame);
     end
     drawnow
-    pause(0.01)
+    pause(0.001)
 end
 %%
 
@@ -235,13 +236,13 @@ plot([0 40],[0.5 0.5], '--r', 'Linewidth', 2 );
 xlabel('Time [s]')
 ylabel('Difference CG Drone and Tetherlength [m]')
 
-figure;
-grid on
-hold on
-plot( t_vec,V_save, 'color', '[ 0    0.4470    0.7410]', 'Linewidth', 2 );
-hold on
-xlabel('Time [s]')
-ylabel('V [-]')
+% figure;
+% grid on
+% hold on
+% plot( t_vec,V_save, 'color', '[ 0    0.4470    0.7410]', 'Linewidth', 2 );
+% hold on
+% xlabel('Time [s]')
+% ylabel('V [-]')
 
 %% robustness mod analysis
 figure;

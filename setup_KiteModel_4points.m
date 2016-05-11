@@ -66,8 +66,9 @@ ls_DB = norm( D_init - B_init );
 l_s_PUav =  norm( pos_UAV_init - p_B_UAV_init); % initial tether segment length between particle and uav
 l_s_BP = norm( B_init - p_B_UAV_init); % initial tether segment length between particle and kite
 
-%% Plot kite geometry
 if 0
+%% Plot kite geometry
+
     close all
     figure;
     axis equal
@@ -95,4 +96,23 @@ if 0
     plot3([C_init(1),D_init(1)], [C_init(2),D_init(2)],[C_init(3),D_init(3)],'-k',  'Linewidth', 1.5)
     plot3([C_init(1),B_init(1)], [C_init(2),B_init(2)],[C_init(3),B_init(3)],'-k',  'Linewidth', 1.5)
     plot3([D_init(1),B_init(1)], [D_init(2),B_init(2)],[D_init(3),B_init(3)],'-k',  'Linewidth', 1.5)
+    
+    % fabric
+    D_le = [A_init(1); D_init(2); D_init(3)];
+    D_te = [-A_init(1); D_init(2); D_init(3)];
+    C_le = [A_init(1); C_init(2); C_init(3)];
+    C_te = [-A_init(1); C_init(2); C_init(3)];
+    plot3([D_le(1),D_te(1)], [D_le(2),D_te(2)],[D_le(3),D_te(3)],'-k',  'Linewidth', 1.5)
+    plot3([C_le(1),C_te(1)], [C_le(2),C_te(2)],[C_le(3),C_te(3)],'-k',  'Linewidth', 1.5)
+    
+    kite_le_spline =spline([D_le(2),A_init(2),C_le(2)],[D_le(3),B_init(3),C_le(3)]);
+    kite_le = ppval(kite_le_spline, linspace(D_le(2),C_le(2),10));
+    plot3( A_init(1)*ones(length(kite_le),1), linspace(D_le(2),C_le(2),10), kite_le, '-k',  'Linewidth', 1.5)
+    
+    kite_te_spline =spline([D_te(2),A_init(2),C_te(2)],[D_te(3),B_init(3),C_te(3)]);
+    kite_te = ppval(kite_le_spline, linspace(D_te(2),C_te(2),10));
+    plot3( -A_init(1)*ones(length(kite_te),1), linspace(D_te(2),C_le(2),10), kite_te, '-k',  'Linewidth', 1.5)
+
+    plot3( [-A_init(1),A_init(1)], [0 0], [B_init(3) B_init(3)], '-k',  'Linewidth', 1.5)
+
 end
