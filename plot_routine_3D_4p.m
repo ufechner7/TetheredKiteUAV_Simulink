@@ -43,11 +43,13 @@ ylabel('y [m]')
 zlabel('z [m]')
 
 %axis([ min( min( x_vec ) ) max( max(x_vec))  min(min(y_vec)) max(max(y_vec))  max(min(min(z_vec)),0) max(max(z_vec))  ])
-axis([-10 10 -10 10 0 80])
+axis([-10 20 -10 10 0 80])
 
 hold on
 
-view([45,10])
+%view([45,10])
+view([0,90])
+
 quadcopterh = [];
 axis equal
 plot3( x_ref, y_ref, z_ref,'color', '0.7500    0.7500  0', 'Linewidth', 1.5, 'Linestyle', '--' )

@@ -14,8 +14,8 @@ t0 = 1;
 t1 = 3; 
 
 T_ro_init = 0;
-T_sim = 20;
-T_launch = 40;
+T_sim = 1000;
+T_launch = 10000;
 dt = 0.002;
 sample_log = 0.01;
 l_t = 10; % initial tether length
