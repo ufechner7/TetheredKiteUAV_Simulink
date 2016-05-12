@@ -139,7 +139,7 @@ for step = 1 : 10 : sim_len
         writeVideo(writerObj, frame);
     end
     drawnow
-    pause(0.001)
+   % pause(0.001)
 end
 %%
 
