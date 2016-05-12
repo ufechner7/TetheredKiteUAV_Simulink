@@ -47,8 +47,8 @@ axis([-10 20 -10 10 0 80])
 
 hold on
 
-%view([45,10])
-view([0,90])
+view([30,15])
+%view([0,90])
 
 quadcopterh = [];
 axis equal
